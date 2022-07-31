@@ -113,9 +113,9 @@ nano /etc/default/grub<br/>
 `and change it to  GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/vda3:volgroup0:allow-discards loglevel=3 quiet nomodeset"`<br/>
 grub-mkconfig -o /boot/grub/grub.cfg<br/>
 
-`Now you can reboot your PC, Congratulations!`<br/>
+`Now you can reboot your PC, Congratulations!`:partying_face::partying_face:<br/>
 exit<br/>
 umount -a<br/>
 
-reboot<br/>
+reboot:orangutan:<br/>
 
