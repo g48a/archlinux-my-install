@@ -11,7 +11,7 @@
 **/dev/vda2** &nbsp;&nbsp;&nbsp; # BOOT type_id: SKIP_THIS_ONE ***Last Sector+512M***<br/>
 **/dev/vda3** &nbsp;&nbsp;&nbsp; # LVM type_id: 43 ***Last Sector 100%FREE***<br/>
 <br/>
-
+![Screenshot](Screenshot0.png)
 ### Step 1 - Making File System
 
 `After this we need to make our filesystem`<br/>
