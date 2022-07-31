@@ -19,11 +19,11 @@
 **mkfs.ext4 /dev/vda2** &nbsp;&nbsp;&nbsp;&nbsp;`# for the future BOOT`<br/>
 #### Step 1.1 - Enctyption part
 `# And we also need to encrypt our /dev/vda3`<br/>
-cryptosetup luksFormat /dev/vda3 <br/>
+cryptsetup luksFormat /dev/vda3 <br/>
 `<Make your self a good pass>` <br/>
 
 `Now we need to unlock it`<br/>
-cryptosetup open --type luks /dev/vda3 lvm<br/>
+cryptsetup open --type luks /dev/vda3 lvm<br/>
 #### Step 1.2 - LVM partition
 pvcreate --dataalignment 1m /dev/mapper/lvm<br/>
 vgcreate volgroup0 /dev/mapper/lvm<br/>
@@ -54,6 +54,9 @@ cat /mnt/etc/fstab<br/>
 
 ### Step 2 - Installation section
 pacstrap -i /mnt base<br/>
+`if you got invalid or corrupted package (PGP signature, then type this and repead previous command)`<br/>
+pacman -Syu archlinux-keyring<br/>
+`if it's too large then type pacman -S instead of pacman -Syu`<br/>
 arch-chroot /mnt<br/>
 `Two kernels better than one, one is broken, second up and running`<br/>
 pacman -S linux linux-headers linux-lts linux-lts-headers<br/>
@@ -65,5 +68,39 @@ pacman -S networkmanager wpa_supplicant wireless_tools netctl<br/>
 pacman -S dialog<br/>
 systemctl enable NetworkManager<br/>
 pacman -S lvm2<br/>
+
+
+`Change conf file`<br/>
+nano /etc/mkinitcpio.conf<br/>
+`Find this line:`<br/>
+Find HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)<br/>
+`And change it to`<br/>
+Find HOOKS=(base udev autodetect modconf block encrypt lvm2 filesystems keyboard fsck)<br/>
+
+mkinitcpio -p linux<br/>
+mkinitcpio -p linux-lts<br/>
+`FIND and UNCOMMENT en_US.UTF-8 UTF-8`<br/>
+nano /etc/locale.gen<br/>
+locale-gen<br/>
+passwd<br/>
+`<create password for your root>`<br/>
+useradd -m -g users -G wheel (your_username_goes_here)<br/>
+passwd (your_user_name)<br/>
+`<create password for your user>`<br/>
+pacman -S sudo<br/>
+which sudo<br/>
+EDITOR=nano visudo<br/>
+`FIND AND UNCOMMENT`<br/>
+%wheel ALL=(ALL) ALL<br/>
+
+
+### Step 3 - GRUB Installation
+pacman -S grub efibootmgr dosfstools os-prober mtools<br/>
+mkdir /boot/EFI<br/>
+mount /dev/vda1 /boot/EFI<br/>
+exit<br/>
+systemctl daemon-reload<br/>
+arch-chroot /mnt<br/>
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck<br/>
 
 
