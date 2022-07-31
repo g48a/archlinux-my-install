@@ -17,11 +17,15 @@
 `After this we need to make our filesystem`<br/>
 **mkfs.fat -F32 /dev/vda1**&nbsp;&nbsp;&nbsp;&nbsp;`# for EFI`<br/>
 **mkfs.ext4 /dev/vda2** &nbsp;&nbsp;&nbsp;&nbsp;`# for the future BOOT`<br/>
-
+#### Step 1.1 - Enctyption part
 `# And we also need to encrypt our /dev/vda3`<br/>
-cryptosetup luksformat /dev/vda3 <br/>
+cryptosetup luksFormat /dev/vda3 <br/>
 `<Make your self a good pass>` <br/>
 
 `Now we need to unlock it`<br/>
-cryptosetup open --type luks /dev/vda3/nano
-
+cryptosetup open --type luks /dev/vda3 lvm<br/>
+#### Step 1.2 - LVM partition
+pvcreate --dataalignment 1m /dev/mapper/lvm<br/>
+vgcreate volgroup0 /dev/mapper/lvm<br/>
+lvcreate -L 30GB volgroup0 -n lv_root<br/>
+lvcreate -l 100%FREE volgroup0 -n lv_home<br/>
