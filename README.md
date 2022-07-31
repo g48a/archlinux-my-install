@@ -119,3 +119,43 @@ umount -a<br/>
 
 reboot:orangutan:<br/>
 
+
+### Step 4 - Post-install Tweaks
+`If you want to create swap file, you are allowed to, thanks to LVM partiotion type`<br/>
+su<br/>
+cd /root<br/>
+dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress<br/>
+chmod 600 /swapfile<br/>
+mkswap /swapfile<br/>
+cp /etc/fstab /etc/fstab.bak<br/>
+echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab<br/>
+cat /etc/fstab<br/>
+free -m<br/>
+mount -a<br/>
+free -m<br/>
+swapon -a<br/>
+
+timedatectl list-timezones<br/>
+timedatectl set-timezone US/Eastern<br/>
+systemctl enable systemd-timesyncd<br/>
+
+hostnamectl set-hostname computer<br/>
+cat /etc/hostname<br/>
+nano /etc/hosts<br/>
+127.0.0.1 localhost<br/>
+127.0.1.1 computer<br/>
+
+`Now it is time to install MicroCode for your CPU! or amd or intel`<br/>
+pacman -S amd-ucode || pacman -S intel-ucode<br/>
+pacman -S xorg-server `But you can also install Wayland instead of Xorg`<br/>
+`Video-Driver GPU from Intel or AMD`<br/>
+pacman -S mesa<br/>
+`If GPU from nvidia, you need to install it for each linux kernel, we have two of them so`<br/>
+pacman -S nvidia nvidia-lts
+`If you are running this through VM, then install this and next one`
+pacman -S virtualbox-guest-utils xf86-video-vmware
+systemctl enable vboxservice
+
+
+### Step 5 - Installing Desktop Environmental
+
