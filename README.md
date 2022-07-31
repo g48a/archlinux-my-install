@@ -102,5 +102,12 @@ exit<br/>
 systemctl daemon-reload<br/>
 arch-chroot /mnt<br/>
 grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck<br/>
-
-
+`Check if locale folder exists`<br/>
+ls -l /boot/grub<br/>
+`If it is not, then create it by mkdir /boot/grub/locale`<br/>
+cp /usr/share/locale/en\\@quot/LC_MESSAGES/grub.mo /boot/grub/locale/en.mo<br/>
+`We need to inform grub to unlock the disk at boot`<br/>
+nano /etc/default/grub<br/>
+`Find and uncomment GRUB_ENABLE_CRYPTODISK=y and then find `<br/>
+`Now find this one GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"`<br/>
+`and change it to  GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/vda3:volgroup0:allow-discards loglevel=3 quiet nomodeset"`<br/>
