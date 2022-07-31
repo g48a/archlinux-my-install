@@ -202,6 +202,6 @@ startx<br/>
 
 ### Step 5 - Installing Desktop Environmental (i3)<br/>
 `Optional pacman -S gdm || sddm`<br/>
-pacman -S xorg xorg-server xorg-xinit xdg-utils xdg-user-dirs i3-gaps i3status rofi efce4-terminal firefox nitrogen picom<br/>
+pacman -S xorg xorg-server xorg-xinit xdg-utils xdg-user-dirs i3-gaps i3status rofi xfce4-terminal firefox nitrogen picom<br/>
 echo 'exec i3' >> ~/.xinitrc<br/>
 startx<br/>
