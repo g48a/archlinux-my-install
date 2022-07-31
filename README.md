@@ -157,5 +157,18 @@ pacman -S virtualbox-guest-utils xf86-video-vmware
 systemctl enable vboxservice
 
 
-### Step 5 - Installing Desktop Environmental
+### Step 5 - Installing Desktop Environmental (bspwn)
+pacman -S xorg-xinit bspwn sxhkd dmenu nitrogen picom xfce4-terminal firefox arandr
 
+mkdir  .config/bspwm
+mkdir  .config/sxhkd
+cp /usr/share/doc/bspwm/examples/bspwmrc .config/bspwm
+cp /usr/share/doc/bspwm/examples/sxhkdrc .config/sxhkd
+
+`Find line #terminal emulator and write your terminal`
+nano .config/sxhkd/sxhkdrc
+```
+# terminal emulator
+super + Return
+&nbsp;&nbsp;&nbsp;xfce4-terminal
+```
