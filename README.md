@@ -111,3 +111,6 @@ nano /etc/default/grub<br/>
 `Find and uncomment GRUB_ENABLE_CRYPTODISK=y and then find `<br/>
 `Now find this one GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"`<br/>
 `and change it to  GRUB_CMDLINE_LINUX_DEFAULT="cryptdevice=/dev/vda3:volgroup0:allow-discards loglevel=3 quiet nomodeset"`<br/>
+grub-mkconfig -o /boot/grub/grub.cfg
+
+`Now to can reboot your PC, Congrats!`
