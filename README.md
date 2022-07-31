@@ -151,24 +151,57 @@ pacman -S xorg-server `But you can also install Wayland instead of Xorg`<br/>
 `Video-Driver GPU from Intel or AMD`<br/>
 pacman -S mesa<br/>
 `If GPU from nvidia, you need to install it for each linux kernel, we have two of them so`<br/>
-pacman -S nvidia nvidia-lts
-`If you are running this through VM, then install this and next one`
-pacman -S virtualbox-guest-utils xf86-video-vmware
-systemctl enable vboxservice
+pacman -S nvidia nvidia-lts<br/>
+`If you are running this through VM, then install this and next one`<br/>
+pacman -S virtualbox-guest-utils xf86-video-vmware<br/>
+systemctl enable vboxservice<br/>
 
 
 ### Step 5 - Installing Desktop Environmental (bspwn)
-pacman -S xorg-xinit bspwn sxhkd dmenu nitrogen picom xfce4-terminal firefox arandr
+pacman -S xorg-xinit bspwn sxhkd dmenu nitrogen picom xfce4-terminal firefox arandr<br/>
 
-mkdir  .config/bspwm
-mkdir  .config/sxhkd
-cp /usr/share/doc/bspwm/examples/bspwmrc .config/bspwm
-cp /usr/share/doc/bspwm/examples/sxhkdrc .config/sxhkd
+mkdir  .config/bspwm<br/>
+mkdir  .config/sxhkd<br/>
+cp /usr/share/doc/bspwm/examples/bspwmrc .config/bspwm<br/>
+cp /usr/share/doc/bspwm/examples/sxhkdrc .config/sxhkd<br/>
 
-`Find line #terminal emulator and write your terminal`
-nano .config/sxhkd/sxhkdrc
-```
-# terminal emulator
-super + Return
-&nbsp;&nbsp;&nbsp;xfce4-terminal
-```
+`Find line #terminal emulator and write your terminal`<br/>
+nano .config/sxhkd/sxhkdrc<br/>
+
+
+`#terminal emulator`<br/>
+super + Return<br/>
+&nbsp;&nbsp;&nbsp;xfce4-terminal<br/>
+
+cp /etc/X11/xinit/xinitrc .xinitrc<br/>
+`In this file ".xinitrc" you need to delete last 5 lines`<br/>
+nano .xinitrc<br/>
+`Remove this`<br/>
+twm &<br/>
+xclock -geometry 50x50-1+1 &<br/>
+xterm -geometry 80x50+494+51 &<br/>
+xterm -geometry 80x20+494-0 &<br/>
+exec xterm -geometry 80x66+0+0 -name login<br/>
+
+`And replace them with:`<br/>
+setxkbmap en &<br/>
+picom -f &<br/>
+exec bspwm<br/>
+
+`If you are using VM then do this `<br/>
+nano /etc/xdg/picom.conf<br/>
+`Find line vsync = true and comment it to make this command unavailable`<br/>
+
+`Now you can start the Windows Manager`<br/>
+startx<br/>
+
+
+
+
+
+
+### Step 5 - Installing Desktop Environmental (i3)<br/>
+`Optional pacman -S gdm || sddm`<br/>
+pacman -S xorg xorg-server xorg-xinit xdg-utils xdg-user-dirs i3-gaps i3status rofi efce4-terminal firefox nitrogen picom<br/>
+echo 'exec i3' >> ~/.xinitrc<br/>
+startx<br/>
